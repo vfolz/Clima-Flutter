@@ -16,24 +16,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   void getLocation() async{
     Location location = Location();
-    Map locationMap =  await location.getCurrentLocation();
-    lat = locationMap['latitude'];
-    lon = locationMap['longitude'];
+    await location.getCurrentLocation();
 
-    String url = 'https://api.openweathermap.org/data/2.5/weather?lat='+
-        lat.toString() +'&lon=' + lon.toString() + '&appid='+kApiKey;
+    String url = 'https://api.openweathermap.org/data/2.5/weather?lat=${location.getLatitude()}&lon=${location.getLongitude()}&appid=$kApiKey&units=imperial';
 
     NetworkHelper networkHelper = NetworkHelper(url);
 
     var data = await networkHelper.getData();
-
-    var temperature = data['main']['temp'];
-    var condition = data['weather'][0]['main'];
-    var cityName = data['name'];
-
-    print(condition);
-    print (cityName);
-    print(temperature);
     Navigator.push(context, MaterialPageRoute(builder: (context) => LocationScreen(locationData: data)));
   }
 
