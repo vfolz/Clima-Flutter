@@ -1,11 +1,8 @@
-import 'package:clima/utilities/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:clima/services/weather.dart';
 import 'package:clima/screens/location_screen.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
-import '../services/weather.dart';
 import '../services/weather.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -21,7 +18,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
     var data  = await weatherModel.getLocationWeather();
     Navigator.push(context, MaterialPageRoute(builder: (context) => LocationScreen(locationData: data)));
   }
-
   @override
   void initState(){
     super.initState();
@@ -36,10 +32,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
           color: Colors.white,
           size: 50.0,
         )
-
       )
-
-
     );
   }
 }
