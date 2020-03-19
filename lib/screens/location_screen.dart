@@ -2,41 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:clima/utilities/constants.dart';
 import 'package:clima/services/weather.dart';
 
-
-
+import '../services/weather.dart';
 class LocationScreen extends StatefulWidget {
-
   LocationScreen({this.locationData});
-
   final locationData;
-
   @override
   _LocationScreenState createState() => _LocationScreenState();
 }
-
 class _LocationScreenState extends State<LocationScreen> {
-
   int temperature;
   int condition;
   String cityName;
-
   WeatherModel weatherModel = WeatherModel ();
 
   @override
   void initState(){
     super.initState();
     updateUI(widget.locationData);
-
-
   }
-
   void updateUI(var data){
-    temperature = (data['main']['temp']).toInt();
-    condition = data['weather'][0]['id'];
-    cityName = data['name'];
+    setState(() {
+      weatherModel.getLocationWeather();
+      temperature = (data['main']['temp']).toInt();
+      condition = data['weather'][0]['id'];
+      cityName = data['name'];
+
+    });
   }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,14 +51,19 @@ class _LocationScreenState extends State<LocationScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      var weatherData = await weatherModel.getLocationWeather() ;
+                      updateUI(weatherData);
+                    },
                     child: Icon(
                       Icons.near_me,
                       size: 50.0,
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+
+                    },
                     child: Icon(
                       Icons.location_city,
                       size: 50.0,
