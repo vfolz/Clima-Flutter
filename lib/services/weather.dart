@@ -7,6 +7,14 @@ import 'networking.dart';
 
 class WeatherModel {
 
+
+  Future getCityWeather(String cityName) async{
+    String url = 'https://api.openweathermap.org/data/2.5/weather?q=$cityName&appid=$kApiKey&units=imperial';
+    NetworkHelper networkHelper = NetworkHelper(url);
+    var weatherData = networkHelper.getData();
+    return weatherData;
+  }
+
   Future getLocationWeather() async{
     Location location = Location();
     await location.getCurrentLocation();

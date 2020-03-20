@@ -26,6 +26,8 @@ class _LocationScreenState extends State<LocationScreen> {
 
   void updateUI(var data) {
     setState(() {
+
+
       weatherModel.getLocationWeather();
       temperature = (data['main']['temp']).toInt();
       condition = data['weather'][0]['id'];
@@ -70,7 +72,8 @@ class _LocationScreenState extends State<LocationScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => CityScreen()));
-                      print(typedName);
+                       var data = await weatherModel.getCityWeather(typedName);
+                       updateUI(data);
                       },
                     child: Icon(
                       Icons.location_city,
